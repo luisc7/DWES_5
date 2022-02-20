@@ -24,10 +24,15 @@ public class EventoDaoImpl implements EventoDao{
 		return erepo.buscarDestacados("s");
 	}
 
-	/*@Override
+	@Override
 	public List<Evento> searchName(String nombre) {
 		return erepo.buscarPorNombre(nombre);
-	}*/
+	}
+
+	@Override
+	public List<Evento> searchDescrip(String descripcion) {
+		return erepo.buscarPorDescripcion(descripcion);
+	}
 
 	@Override
 	public int plazasLibres(int idEvento) {

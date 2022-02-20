@@ -31,10 +31,15 @@ public class EventoRestController {
 		return edao.findHighlights();
 	}
 	
-	/*@GetMapping("/buscarEventos/{subcadena}")
+	@GetMapping("/buscarEventos/{subcadena}")
 	public List<Evento> verNombre(@PathVariable("subcadena") String subcadena){
 		return edao.searchName(subcadena);
-	}*/
+	}
+	
+	@GetMapping("/buscarEventosDescripcion/{subcadena}")
+	public List<Evento> verDescrip(@PathVariable("subcadena") String subcadena){
+		return edao.searchDescrip(subcadena);
+	}
 	
 	@GetMapping("/verUno/{idEvento}")
 	public Evento verEvento(@PathVariable("idEvento") int idEvento){

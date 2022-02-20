@@ -8,7 +8,8 @@ public interface EventoDao {
 
 	List<Evento> findActive();
 	List<Evento> findHighlights();
-	/*List<Evento> searchName(String nombre);*/
+	List<Evento> searchName(String nombre);
+	List<Evento> searchDescrip(String nombre);
 	int plazasLibres(int idEvento);
 	Evento verEvento(int idEvento);
 	boolean newEvento(Evento evento);

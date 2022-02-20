@@ -15,7 +15,10 @@ public interface EventoRepository extends JpaRepository<Evento, Integer>{
 	@Query("select e from Evento e where e.destacado = ?1")
 	public List<Evento> buscarDestacados(String destacado);
 	
-	/*@Query("select e from Evento e where e.nombre like = %?1% ")
-	public List<Evento> buscarPorNombre(String destacado);*/
+	@Query("select e from Evento e where e.nombre like %?1% ")
+	public List<Evento> buscarPorNombre(String nombre);
+	
+	@Query("select e from Evento e where e.descripcion like %?1% ")
+	public List<Evento> buscarPorDescripcion(String descripcion);
 
 }
