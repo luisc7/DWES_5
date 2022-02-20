@@ -35,7 +35,7 @@ public class EventoDaoImpl implements EventoDao{
 	}
 
 	@Override
-	public int plazasTotales(int idEvento) {
+	public Integer plazasTotales(int idEvento) {
 		return erepo.findById(idEvento).orElse(null).getAforoMaximo();
 	}
 

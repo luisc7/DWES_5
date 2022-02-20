@@ -10,7 +10,7 @@ public interface EventoDao {
 	List<Evento> findHighlights();
 	List<Evento> searchName(String nombre);
 	List<Evento> searchDescrip(String nombre);
-	int plazasTotales(int idEvento);
+	Integer plazasTotales(int idEvento);
 	Evento verEvento(int idEvento);
 	boolean newEvento(Evento evento);
 	boolean modEvento(Evento evento);

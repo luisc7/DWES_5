@@ -1,6 +1,8 @@
 package com.ite.luis.restcontroller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,11 +38,19 @@ public class EventoRestController {
 	
 	@GetMapping("/buscarEventos/{subcadena}")
 	public List<Evento> verNombre(@PathVariable("subcadena") String subcadena){
+		/**
+		 * Büsqueda dentro del nombre del evento, devolviendo la lista de todos los 
+		 * que coinciden
+		 */
 		return edao.searchName(subcadena);
 	}
 	
 	@GetMapping("/buscarEventosDescripcion/{subcadena}")
 	public List<Evento> verDescrip(@PathVariable("subcadena") String subcadena){
+		/**
+		 * Método extra creado para buscar dentro de la descripción, similar al de
+		 * búsqueda en el nombre
+		 */
 		return edao.searchDescrip(subcadena);
 	}
 	
@@ -50,11 +60,31 @@ public class EventoRestController {
 		return "{\"quedan_plazas\" : " + (edao.plazasTotales(idEvento) - rdao.reservasDeUnEvento(idEvento)) + '}';
 	}*/
 	
-	@GetMapping("/plazasQuedan/{idEvento}")
+	/*@GetMapping("/plazasQuedan/{idEvento}")
 	public Info plazasLibres(@PathVariable("idEvento") int idEvento){
 		Info i = new Info();
 		i.setQuedan_plazas((edao.plazasTotales(idEvento) - rdao.reservasDeUnEvento(idEvento)));
 		return i;
+	}*/
+	
+	@GetMapping("/plazasQuedan/{idEvento}")
+	public Map<String, Integer> plazasLibres(@PathVariable("idEvento") int idEvento){
+		/**
+		 * Devuelve la cantidad de plazas libres.
+		 * 
+		 * Si es -1, el Evento no existe
+		 */
+		
+		Map<String, Integer> plazas = new HashMap<String, Integer>();
+		Integer reservas = rdao.reservasDeUnEvento(idEvento);
+		
+		if (reservas != null) {
+			plazas.put("quedan_plazas", edao.plazasTotales(idEvento) - reservas);
+		}
+		else
+			plazas.put("quedan_plazas", -1);
+		
+		return plazas;
 	}
 	
 	
