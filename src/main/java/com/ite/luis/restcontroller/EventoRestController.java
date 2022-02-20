@@ -13,13 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ite.luis.modelo.dao.EventoDao;
+import com.ite.luis.modelo.dao.ReservaDao;
 import com.ite.luis.modelo.entitybeans.Evento;
+import com.ite.luis.modelo.entitybeans.Info;
 
 @RestController
 @RequestMapping("/rest/eventos")
 public class EventoRestController {
 	
 	@Autowired EventoDao edao;
+	@Autowired ReservaDao rdao;
 	
 	@GetMapping("/activos")
 	public List<Evento> verActivos(){
@@ -40,6 +43,20 @@ public class EventoRestController {
 	public List<Evento> verDescrip(@PathVariable("subcadena") String subcadena){
 		return edao.searchDescrip(subcadena);
 	}
+	
+	/*@GetMapping("/plazasQuedan/{idEvento}")
+	public String plazasLibres(@PathVariable("idEvento") int idEvento){
+		//return "{\"quedan_plazas\" : " + (edao.plazasTotales(idEvento) - rdao.reservasDeEvento(idEvento)) + '}';
+		return "{\"quedan_plazas\" : " + (edao.plazasTotales(idEvento) - rdao.reservasDeUnEvento(idEvento)) + '}';
+	}*/
+	
+	@GetMapping("/plazasQuedan/{idEvento}")
+	public Info plazasLibres(@PathVariable("idEvento") int idEvento){
+		Info i = new Info();
+		i.setQuedan_plazas((edao.plazasTotales(idEvento) - rdao.reservasDeUnEvento(idEvento)));
+		return i;
+	}
+	
 	
 	@GetMapping("/verUno/{idEvento}")
 	public Evento verEvento(@PathVariable("idEvento") int idEvento){

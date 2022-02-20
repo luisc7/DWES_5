@@ -35,9 +35,8 @@ public class EventoDaoImpl implements EventoDao{
 	}
 
 	@Override
-	public int plazasLibres(int idEvento) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int plazasTotales(int idEvento) {
+		return erepo.findById(idEvento).orElse(null).getAforoMaximo();
 	}
 
 	@Override
